@@ -1,0 +1,8 @@
+streamlit==1.25.0
+
+yt-dlp==2023.7.6
+youtube-transcript-api==0.6.1
+
+langchain==0.0.263
+transformers==4.31.0
+deeplake==3.6.18
