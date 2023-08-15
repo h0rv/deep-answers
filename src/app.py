@@ -1,5 +1,4 @@
 from os import environ, mkdir, path, walk
-from typing import Dict
 
 import streamlit as st
 from langchain.document_loaders import TextLoader
@@ -7,17 +6,18 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import DeepLake
 from transformers import pipeline
 
+import youtube as yt
+
 from config import conf
 
-DATA_DIR = conf.DATA_DIR
-VTT_DATA_DIR = conf.VTT_DATA_DIR
-TXT_DATA_DIR = conf.TXT_DATA_DIR
-
-# model = pipeline("question-answering", model="deepset/roberta-base-squad2")
-
-
-# Get and set env vars
+# Get and set config variables
 environ["HUGGINGFACEHUB_API_TOKEN"] = conf["HUGGINGFACEHUB_API_TOKEN"]
+DATA_DIR = conf["DATA_DIR"]
+VTT_DATA_DIR = conf["VTT_DATA_DIR"]
+TXT_DATA_DIR = conf["TXT_DATA_DIR"]
+PODCAST_YT_PLAYLIST_URL = conf["PODCAST_YT_PLAYLIST_URL"]
+
+
 
 
 def setup_data():
@@ -25,7 +25,7 @@ def setup_data():
         if not path.exists(dir):
             mkdir(dir)
 
-    videos_info = get_yt_videos_info_from_playlist(PODCAST_YT_PLAYLIST_URL)
+    videos_info = yt.get_videos_info_from_playlist(PODCAST_YT_PLAYLIST_URL)
 
     if "entries" not in videos_info:
         print("Error getting video info. Exiting...")
@@ -38,7 +38,7 @@ def setup_data():
     # convert_all_transcripts_to_txt(id2title)
 
     docs = []
-    for _, _, filenames in os.walk(TXT_DATA_DIR):
+    for _, _, filenames in walk(TXT_DATA_DIR):
         for file in filenames:
             try: 
                 loader = TextLoader(path.join(TXT_DATA_DIR, file), encoding='utf-8')
@@ -58,6 +58,7 @@ def setup_data():
     # with open(txt_file_path, "r", encoding="utf-8") as txt_file:
     #     print("".join(txt_file.readlines()))
 
+model = querier("question-answering", model="deepset/roberta-base-squad2")
 
 def main():
     setup_data()
@@ -66,7 +67,7 @@ def main():
 
     input = st.text_input("Enter question")
     # output = model(input)
-    output = query_engine(input).print_response_stream()
+    output = querier(input).print_response_stream()
 
     print(output)
 

@@ -1,4 +1,5 @@
 import re
+from typing import Dict
 from os import environ, mkdir, path, walk
 from youtube_transcript_api import YouTubeTranscriptApi
 from yt_dlp import YoutubeDL
@@ -7,17 +8,13 @@ from concurrent.futures import ThreadPoolExecutor
 
 from config import conf
 
-DATA_DIR = conf.DATA_DIR
-VTT_DATA_DIR = conf.VTT_DATA_DIR
-TXT_DATA_DIR = conf.TXT_DATA_DIR
-YT_API_KEY = conf.YT_API_KEY
-
-PODCAST_YT_PLAYLIST_URL = (
-    "https://www.youtube.com/playlist?list=PL8xK8kBHHUX4NW8GqUsyFhBF_xCnzIdPe"
-)
+DATA_DIR = conf["DATA_DIR"]
+VTT_DATA_DIR = conf["VTT_DATA_DIR"]
+TXT_DATA_DIR = conf["TXT_DATA_DIR"]
+YT_API_KEY = conf["YT_API_KEY"]
 
 
-def get_yt_videos_info_from_playlist(playlist_url):
+def get_videos_info_from_playlist(playlist_url):
     ydl_opts = {
         "quiet": True,  # Suppress console output
         "extract_flat": True,  # Extract videos as a flat list
@@ -32,7 +29,7 @@ def get_yt_videos_info_from_playlist(playlist_url):
         return info
 
 
-def get_yt_video_info(video_id: str):
+def get_video_info(video_id: str):
     # transcript = YouTubeTranscriptApi.get_transcript(video_id)
     # print(transcript)
     ydl_opts = {
@@ -82,7 +79,7 @@ def download_all_transcripts(
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         for id, title in ids_to_titles.items():
-            video_info = get_yt_video_info(id)
+            video_info = get_video_info(id)
             url = get_transript_url(video_info)
             vtt_file_path = path.join(VTT_DATA_DIR, f"{id}.vtt")
             # download_transcript(url, vtt_file_path, if_not_exists=True)
