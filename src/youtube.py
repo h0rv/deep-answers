@@ -152,4 +152,3 @@ def convert_all_transcripts_to_txt(
     # Wait on all tasks to finish
     for res in results:
         res.result()
-

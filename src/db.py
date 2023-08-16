@@ -33,14 +33,16 @@ def test():
     docs = load_transcripts()
     embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
     db = get_db(docs, embedding_function)
-    
+
     while True:
         query = input("Enter query ('q' to quit): ")
 
-        if query.lower() == 'q': break
+        if query.lower() == "q":
+            break
 
         docs = db.similarity_search(query)
         print(docs[0].page_content)
+
 
 if __name__ == "__main__":
     test()
