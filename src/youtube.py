@@ -1,10 +1,11 @@
 import re
-from typing import Dict
+from concurrent.futures import ThreadPoolExecutor
 from os import environ, mkdir, path, walk
+from typing import Dict
+
+import requests
 from youtube_transcript_api import YouTubeTranscriptApi
 from yt_dlp import YoutubeDL
-import requests
-from concurrent.futures import ThreadPoolExecutor
 
 from config import conf
 
