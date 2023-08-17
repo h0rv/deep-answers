@@ -12,16 +12,31 @@ def wrap_text(st, text: str):
 def main():
     st.markdown("# Get __Answers__ to your _Deep Questions_")
 
-    prompt = st.text_input("Enter prompt: ")
+    # Initialize chat history
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
 
-    if len(prompt) > 0:
-        with st.spinner(text="Generating"):
-            resp = model.prompt(prompt)
+    messages = st.session_state.messages
 
-            # st.success("")
-            wrap_text(st, resp)
 
-            return
+    if prompt := st.chat_input("Enter prompt"):
+        st.chat_message("user").markdown(prompt)
+
+        resp = model.prompt(prompt)
+
+        st.chat_message("assistant").markdown(resp)
+        # wrap_text(, resp)
+
+    # prompt = st.text_input("Enter prompt: ")
+    #
+    # if len(prompt) > 0:
+    #     with st.spinner(text="Generating"):
+    #         resp = model.prompt(prompt)
+    #
+    #         # st.success("")
+    #         wrap_text(st, resp)
+    #
+    #         return
 
 
 if __name__ == "__main__":
