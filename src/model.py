@@ -13,14 +13,14 @@ model = HuggingFaceHub(
     # repo_id="google/flan-t5-base",
     repo_id="google/flan-t5-large",
     huggingfacehub_api_token=HUGGINGFACEHUB_API_TOKEN,
-    model_kwargs={ # https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig
+    model_kwargs={  # https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig
         "min_length": 3,
-        "max_length": 250,
+        "max_length": 500,
         "temperature": 0.7,
-    #     # "top_k": 50,
-    #     # "top_p": 1.0,
-    #     # "repetition_penalty": 1.1,
-    #     # "early_stopping": True,
+        #     # "top_k": 50,
+        #     # "top_p": 1.0,
+        #     # "repetition_penalty": 1.1,
+        #     # "early_stopping": True,
     },
 )
 

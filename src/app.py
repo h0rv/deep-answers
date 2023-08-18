@@ -10,33 +10,26 @@ def wrap_text(st, text: str):
 
 
 def main():
-    st.markdown("# Get __Answers__ to your _Deep Questions_")
+    st.markdown("# Get <u>Answers</u> to your _Deep Questions_", unsafe_allow_html=True)
 
-    # Initialize chat history
     if "messages" not in st.session_state:
-        st.session_state.messages = []
+        st.session_state["messages"] = [
+            {"role": "assistant", "content": "How can I help you?"}
+        ]
 
-    messages = st.session_state.messages
-
+    for msg in st.session_state.messages:
+        st.chat_message(msg["role"]).write(msg["content"])
 
     if prompt := st.chat_input("Enter prompt"):
         st.chat_message("user").markdown(prompt)
 
+        st.session_state.messages.append({"role": "user", "content": prompt})
+
         resp = model.prompt(prompt)
 
-        st.chat_message("assistant").markdown(resp)
-        # wrap_text(, resp)
+        st.session_state.messages.append({"role": "assistant", "content": resp})
 
-    # prompt = st.text_input("Enter prompt: ")
-    #
-    # if len(prompt) > 0:
-    #     with st.spinner(text="Generating"):
-    #         resp = model.prompt(prompt)
-    #
-    #         # st.success("")
-    #         wrap_text(st, resp)
-    #
-    #         return
+        st.chat_message("assistant").markdown(resp)
 
 
 if __name__ == "__main__":
