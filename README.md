@@ -1,6 +1,6 @@
 # 📚 Welcome to Deep Answers! 🤔
 
-  Inspired by the popular podcast ["Deep Questions"](https://www.thedeeplife.com/) by Cal Newport, the project aims to leverage the powre of language models to analyze and summarize podcast transcripts, generate answers to listener questions, and produce original text based on the content.
+  Inspired by the popular podcast ["Deep Questions"](https://www.thedeeplife.com/) by Cal Newport, the project aims to leverage the power of language models to analyze and summarize podcast transcripts to generate answers and responses to listener questions and prompts.
 
 ## Getting Started 🌱
 
