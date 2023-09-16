@@ -15,6 +15,9 @@ TXT_DATA_DIR = conf["TXT_DATA_DIR"]
 PODCAST_YT_PLAYLIST_URL = conf["PODCAST_YT_PLAYLIST_URL"]
 COLLECTION_NAME = "transcripts"
 
+CHUNK_SIZE = 200
+CHUNK_OVERLAP = CHUNK_SIZE * 0.2
+
 DATABASE = None
 DOCS = None
 
@@ -50,7 +53,9 @@ def setup_data(force_update=False):
                 print(e)
                 pass
 
-    text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    text_splitter = CharacterTextSplitter(
+        chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP
+    )
     docs = text_splitter.split_documents(docs)
 
     DOCS = docs
@@ -108,7 +113,7 @@ def search(query: str):
 
     print(f"Searching database for query: '{query}'")
 
-    docs = DATABASE.similarity_search(query, k=3)
+    docs = DATABASE.similarity_search(query, k=5)
 
     print(f"Successfully retrieved {len(docs)} documents")
 

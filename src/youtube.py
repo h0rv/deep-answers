@@ -12,7 +12,6 @@ from config import conf
 DATA_DIR = conf["DATA_DIR"]
 VTT_DATA_DIR = conf["VTT_DATA_DIR"]
 TXT_DATA_DIR = conf["TXT_DATA_DIR"]
-YT_API_KEY = conf["YT_API_KEY"]
 
 
 def get_videos_info_from_playlist(playlist_url):

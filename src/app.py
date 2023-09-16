@@ -1,6 +1,7 @@
 import streamlit as st
 
 import model
+import huggingchat
 
 
 def wrap_text(st, text: str):
@@ -25,7 +26,8 @@ def main():
 
         st.session_state.messages.append({"role": "user", "content": prompt})
 
-        resp = model.prompt(prompt)
+        # resp = model.prompt(prompt)
+        resp = huggingchat.prompt(prompt)
 
         st.session_state.messages.append({"role": "assistant", "content": resp})
 
